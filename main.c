@@ -9,8 +9,16 @@ void exercise1() {
     swapRows(m, posMin.rowIndex, posMax.rowIndex);
 }
 
+void exercise2() {
+    matrix m = getMemoryMatrix(3, 3);
+    inputMatrix(m);
+
+    insertionSortRowsMatrixByRowCriteria(m,getSum);
+    outputMatrix(m);
+}
+
 int main() {
-    exercise1();
+    exercise2();
 
     return 0;
 }
