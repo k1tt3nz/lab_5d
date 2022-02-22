@@ -207,6 +207,15 @@ bool twoMatricesEqual(matrix const m1, matrix const m2) {
     return true;
 }
 
+bool isMutuallyInverseMatrices(matrix const m1, matrix const m2) {
+    matrix m3 = mulMatrices(m1,m2);
+    bool result = isEMatrix(m3);
+
+    freeMemoryMatrix(m3);
+
+    return result;
+}
+
 void transposeSquareMatrix(matrix m) {
     for (size_t i = 0; i < m.nRows; ++i)
         for (size_t j = i + 1; j < m.nCols; ++j)

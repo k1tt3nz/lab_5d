@@ -69,6 +69,8 @@ bool isEMatrix(matrix m);
 //Возвращает значение ’истина’, если матрица m является симметричной, иначе - 'ложь'.
 bool isSymmetricMatrix(matrix m);
 
+bool isMutuallyInverseMatrices(matrix m1, matrix m2);
+
 //Транспонирует квадратную матрицу m.
 void transposeSquareMatrix(matrix m);
 
@@ -88,6 +90,8 @@ matrix mulMatrices(matrix m1, matrix m2);
 void getSquareOfMatrixIfSymmetric(matrix *m);
 
 void transposeIfMatrixHasNotEqualSumOfRows(matrix m);
+
+
 
 #include "matrix.c"
 

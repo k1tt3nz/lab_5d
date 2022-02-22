@@ -184,6 +184,48 @@ void test_exercise5_NotUnique() {
     freeMemoryMatrix(m2);
 }
 
+void test_exercise6_reciprocal() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    3, -5,
+                    1, -2
+            },
+            2, 2
+    );
+
+    matrix m2 = createMatrixFromArray(
+            (int[]) {
+                    2, -9,
+                    -1, 5
+            },
+            2, 2
+    );
+
+    assert(isMutuallyInverseMatrices(m1, m2) == 1);
+
+}
+
+void test_exercise6_notReciprocal() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    3, -5,
+                    1, -2
+            },
+            2, 2
+    );
+
+    matrix m2 = createMatrixFromArray(
+            (int[]) {
+                    2, -9,
+                    -1, 5
+            },
+            2, 2
+    );
+
+    assert(isMutuallyInverseMatrices(m1, m2) == 1);
+
+}
+
 void test() {
     test_exercise1();
     test_exercise2();
@@ -192,7 +234,10 @@ void test() {
     test_exercise4_NoSymmetric();
     test_exercise5_Unique();
     test_exercise5_NotUnique();
+    test_exercise6_reciprocal();
+    test_exercise6_notReciprocal();
 }
+
 
 int main() {
     test();
