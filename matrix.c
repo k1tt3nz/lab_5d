@@ -1,7 +1,15 @@
 #include "matrix.h"
+
 #include <stdlib.h>
 #include <malloc.h>
+#include <math.h>
+
 #include "array.h"
+
+void impossibleMultiplication() {
+    fprintf(stderr, "multiplication isn't possible");
+    exit(1);
+}
 
 void badIndex() {
     fprintf(stderr, "bad index\n");
@@ -116,24 +124,40 @@ void getSum(matrix const m, int *a) {
     }
 }
 
-void insertionSortRowsMatrixByRowCriteria(matrix m, int(*criteria)(matrix, int *a)) {
-    int *sumRows = malloc(sizeof(int) * m.nRows);
-    criteria(m, sumRows);
-    for (int i = 0; i < m.nRows; ++i) {
-        int minPos = i;
-        for (int j = i + 1; j < m.nRows; ++j) {
-            if (sumRows[j] < sumRows[minPos]) {
-                minPos = j;
+void insertionSortRowsMatrixByRowCriteria(matrix m, int (*criteria)(int *, int)) {
+    int *criteriaArray = (int *) malloc(sizeof(int) * m.nRows);
+    for (size_t i = 0; i < m.nRows; ++i)
+        criteriaArray[i] = criteria(m.values[i], m.nCols);
+
+    for (size_t i = 0; i < m.nRows - 1; ++i)
+        for (size_t j = i + 1; j < m.nRows; ++j)
+            if (criteriaArray[i] > criteriaArray[j]) {
+                swapRows(m, i, j);
+                swapVoid(&criteriaArray[i], &criteriaArray[j], sizeof(int));
             }
-        }
-        swapRows(m, i, minPos);
-        swap(&sumRows[i], &sumRows[minPos]);
-    }
-    free(sumRows);
+
+    free(criteriaArray);
 }
 
-void insertionSortRowsMatrixByColCriteria(matrix m, int(*criteria)(int *, int)) {
+void insertionSortColsMatrixByColCriteria(matrix m, int (*criteria)(int *, int)) {
+    int *criteriaArray = (int *) malloc(sizeof(int) * m.nCols);
+    int *colsElements = (int *) malloc(sizeof(int) * m.nRows);
+    for (size_t j = 0; j < m.nCols; ++j) {
+        for (size_t i = 0; i < m.nRows; ++i)
+            colsElements[i] = m.values[i][j];
 
+        criteriaArray[j] = criteria(colsElements, m.nRows);
+    }
+
+    for (size_t i = 0; i < m.nCols - 1; ++i)
+        for (size_t j = i + 1; j < m.nCols; ++j)
+            if (criteriaArray[i] > criteriaArray[j]) {
+                swapColumns(m, i, j);
+                swapVoid(&criteriaArray[i], &criteriaArray[j], sizeof(int));
+            }
+
+    free(criteriaArray);
+    free(colsElements);
 }
 
 
@@ -181,6 +205,18 @@ bool isSymmetricMatrix(matrix m) {
     return true;
 }
 
+bool twoMatricesEqual(matrix const m1, matrix const m2) {
+    if (m1.nRows != m2.nRows || m1.nCols != m2.nCols)
+        return false;
+
+    for (size_t i = 0; i < m1.nRows; ++i)
+        for (size_t j = 0; j < m1.nCols; ++j)
+            if (m1.values[i][j] != m2.values[i][j])
+                return false;
+
+    return true;
+}
+
 void transposeSquareMatrix(matrix m) {
     for (size_t i = 0; i < m.nRows; ++i)
         for (size_t j = i + 1; j < m.nCols; ++j)
@@ -224,4 +260,32 @@ matrix createMatrixFromArray(const int *a, const int nRows, const int nCols) {
         }
     }
     return m;
+}
+
+/*void sortRowsByMaxElement(matrix m) {
+    selectionSortRowsMatrixByRowCriteria(m, getMax);
+}*/
+
+void sortColsByMinElement() {
+
+}
+
+matrix mulMatrices(matrix const m1, matrix const m2) {
+    if (m1.nCols != m2.nRows)
+        impossibleMultiplication();
+
+    matrix m3 = getMemoryMatrix(m1.nRows, m2.nCols);
+    for (size_t i = 0; i < m1.nRows; ++i)
+        for (size_t j = 0; j < m2.nCols; ++j) {
+            m3.values[i][j] = 0;
+            for (size_t k = 0; k < m1.nCols; ++k)
+                m3.values[i][j] += m1.values[i][k] * m2.values[k][j];
+        }
+
+    return m3;
+}
+
+void getSquareOfMatrixIfSymmetric(matrix *m) {
+    if (isSymmetricMatrix(*m))
+        *m = mulMatrices(*m, *m);
 }
