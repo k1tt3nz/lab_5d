@@ -226,6 +226,19 @@ void test_exercise6_notReciprocal() {
 
 }
 
+void test_exercise7() {
+    matrix m = createMatrixFromArray(
+            (int[]) {
+                    3, 2, 5, 4,
+                    1, 3, 6, 3,
+                    3, 2, 1, 2
+            },
+            3, 4
+    );
+
+    assert(findSumOfMaxesOfPseudoDiagonal(m) == 20);
+}
+
 void test() {
     test_exercise1();
     test_exercise2();
@@ -236,6 +249,7 @@ void test() {
     test_exercise5_NotUnique();
     test_exercise6_reciprocal();
     test_exercise6_notReciprocal();
+    test_exercise7();
 }
 
 

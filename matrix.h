@@ -91,6 +91,9 @@ void getSquareOfMatrixIfSymmetric(matrix *m);
 
 void transposeIfMatrixHasNotEqualSumOfRows(matrix m);
 
+int getMaxDiagonalElement(matrix m, int iRows, int jCols);
+
+long long findSumOfMaxesOfPseudoDiagonal(matrix m);
 
 
 #include "matrix.c"

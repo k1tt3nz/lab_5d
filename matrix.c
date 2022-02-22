@@ -208,7 +208,7 @@ bool twoMatricesEqual(matrix const m1, matrix const m2) {
 }
 
 bool isMutuallyInverseMatrices(matrix const m1, matrix const m2) {
-    matrix m3 = mulMatrices(m1,m2);
+    matrix m3 = mulMatrices(m1, m2);
     bool result = isEMatrix(m3);
 
     freeMemoryMatrix(m3);
@@ -289,13 +289,34 @@ void getSquareOfMatrixIfSymmetric(matrix *m) {
         *m = mulMatrices(*m, *m);
 }
 
-void transposeIfMatrixHasNotEqualSumOfRows(matrix m){
+void transposeIfMatrixHasNotEqualSumOfRows(matrix m) {
     int criteriaArray[m.nRows];
     for (int i = 0; i < m.nRows; ++i) {
         criteriaArray[i] = getSum(m.values[i], m.nCols);
     }
 
-    if(isUnique(criteriaArray,m.nRows)){
+    if (isUnique(criteriaArray, m.nRows)) {
         transposeSquareMatrix(m);
     }
+}
+
+int getMaxDiagonalElement(matrix m, int iRows, int jCols) {
+    int maxElement = 0;
+    while (iRows < m.nRows && jCols < m.nCols) {
+        maxElement = max2(maxElement, m.values[iRows++][jCols++]);
+    }
+    return maxElement;
+}
+
+long long findSumOfMaxesOfPseudoDiagonal(matrix m) {
+    long long sumElements = 0;
+    for (int i = 1; i < m.nRows; ++i) {
+        sumElements += getMaxDiagonalElement(m, i, 0);
+    }
+
+    for (int j = 1; j < m.nCols; ++j) {
+        sumElements += getMaxDiagonalElement(m, 0, j);
+    }
+
+    return sumElements;
 }
