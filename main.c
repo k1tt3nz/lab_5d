@@ -42,7 +42,7 @@ void test_exercise2() {
             3, 3
     );
 
-    sortRowsByMaxElement(m1);
+//    sortRowsByMaxElement(m1);
 
     matrix m2 = createMatrixFromArray(
             (int[]) {
@@ -129,12 +129,69 @@ void test_exercise4_NoSymmetric() {
     freeMemoryMatrix(m1);
 }
 
+void test_exercise5_Unique() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    1, 1, 1,
+                    2, 2, 2,
+                    3, 3, 3
+            },
+            3, 3
+    );
+
+    transposeIfMatrixHasNotEqualSumOfRows(m1);
+
+    matrix m2 = createMatrixFromArray(
+            (int[]) {
+                    1, 2, 3,
+                    1, 2, 3,
+                    1, 2, 3
+            },
+            3, 3
+    );
+
+    assert(twoMatricesEqual(m1, m2) == 1);
+
+    freeMemoryMatrix(m1);
+    freeMemoryMatrix(m2);
+}
+
+void test_exercise5_NotUnique() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    4, 1, 2,
+                    2, 3, 2,
+                    3, 3, 3
+            },
+            3, 3
+    );
+
+    //Матрица не будет транспонирована
+    transposeIfMatrixHasNotEqualSumOfRows(m1);
+
+    matrix m2 = createMatrixFromArray(
+            (int[]) {
+                    4, 1, 2,
+                    2, 3, 2,
+                    3, 3, 3
+            },
+            3, 3
+    );
+
+    assert(twoMatricesEqual(m1, m2) == 1);
+
+    freeMemoryMatrix(m1);
+    freeMemoryMatrix(m2);
+}
+
 void test() {
     test_exercise1();
     test_exercise2();
     test_exercise3();
     test_exercise4_one();
     test_exercise4_NoSymmetric();
+    test_exercise5_Unique();
+    test_exercise5_NotUnique();
 }
 
 int main() {

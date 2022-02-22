@@ -114,16 +114,6 @@ void swapColumns(matrix m, int j1, int j2) {
     }
 }
 
-void getSum(matrix const m, int *a) {
-    for (int i = 0; i < m.nRows; ++i) {
-        int x = 0;
-        for (int j = 0; j < m.nCols; ++j) {
-            x += m.values[i][j];
-        }
-        a[i] = x;
-    }
-}
-
 void insertionSortRowsMatrixByRowCriteria(matrix m, int (*criteria)(int *, int)) {
     int *criteriaArray = (int *) malloc(sizeof(int) * m.nRows);
     for (size_t i = 0; i < m.nRows; ++i)
@@ -262,9 +252,9 @@ matrix createMatrixFromArray(const int *a, const int nRows, const int nCols) {
     return m;
 }
 
-/*void sortRowsByMaxElement(matrix m) {
-    selectionSortRowsMatrixByRowCriteria(m, getMax);
-}*/
+void sortRowsByMaxElements(matrix m) {
+    insertionSortRowsMatrixByRowCriteria(m, getMax);
+}
 
 void sortColsByMinElement() {
 
@@ -288,4 +278,15 @@ matrix mulMatrices(matrix const m1, matrix const m2) {
 void getSquareOfMatrixIfSymmetric(matrix *m) {
     if (isSymmetricMatrix(*m))
         *m = mulMatrices(*m, *m);
+}
+
+void transposeIfMatrixHasNotEqualSumOfRows(matrix m){
+    int criteriaArray[m.nRows];
+    for (int i = 0; i < m.nRows; ++i) {
+        criteriaArray[i] = getSum(m.values[i], m.nCols);
+    }
+
+    if(isUnique(criteriaArray,m.nRows)){
+        transposeSquareMatrix(m);
+    }
 }

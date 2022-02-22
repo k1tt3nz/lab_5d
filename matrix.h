@@ -51,8 +51,6 @@ void swapRows(matrix m, int t1, int t2);
 void swapColumns(matrix m, int j1, int j2);
 
 
-void getSum(matrix const m, int *a);
-
 //Выполняет сортировку вставками строк матрицы m по не убыванию значения функции criteria применяемой для строк.
 void selectionSortRowsMatrixByRowCriteria(matrix m, int(*criteria)(matrix, int *a));
 
@@ -88,6 +86,8 @@ void sortRowsByMaxElement(matrix m);
 matrix mulMatrices(matrix m1, matrix m2);
 
 void getSquareOfMatrixIfSymmetric(matrix *m);
+
+void transposeIfMatrixHasNotEqualSumOfRows(matrix m);
 
 #include "matrix.c"
 
