@@ -239,6 +239,65 @@ void test_exercise7() {
     assert(findSumOfMaxesOfPseudoDiagonal(m) == 20);
 }
 
+void test_exercise8_MaxInTheMiddle() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    10, 7, 5, 6,
+                    3, 11, 8, 9,
+                    4, 1, 12, 2
+            },
+            3, 4
+    );
+
+    assert(getMinInArea(m1) == 5);
+
+    freeMemoryMatrix(m1);
+}
+
+void test_exercise8_MaxOnTheLeftEdge() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    10, 7, 5, 6,
+                    3, 11, 8, 9,
+                    12, 1, 1, 2
+            },
+            3, 4
+    );
+
+    assert(getMinInArea(m1) == 3);
+
+    freeMemoryMatrix(m1);
+}
+
+
+void test_exercise8_MaxInTheFirstRow() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    7, 7, 12, 6,
+                    3, 11, 8, 9,
+                    2, 1, 1, 2
+            },
+            3, 4
+    );
+
+    assert(getMinInArea(m1) == 12);
+
+    freeMemoryMatrix(m1);
+}
+
+/*void test_exercise11() {
+    matrix m = createMatrixFromArray(
+            (int[]) {
+                    3, 5, 5, 4,
+                    2, 3, 6, 7,
+                    12, 2, 1, 2
+            },
+            3, 4
+    );
+
+    getNSpecialElement(m);
+}*/
+
 void test() {
     test_exercise1();
     test_exercise2();
@@ -250,6 +309,9 @@ void test() {
     test_exercise6_reciprocal();
     test_exercise6_notReciprocal();
     test_exercise7();
+    test_exercise8_MaxInTheFirstRow();
+    test_exercise8_MaxInTheMiddle();
+    test_exercise8_MaxOnTheLeftEdge();
 }
 
 

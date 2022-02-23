@@ -95,6 +95,11 @@ int getMaxDiagonalElement(matrix m, int iRows, int jCols);
 
 long long findSumOfMaxesOfPseudoDiagonal(matrix m);
 
+int getMinInArial(matrix m);
+
+int getNSpecialElement(matrix m);
+
+
 
 #include "matrix.c"
 

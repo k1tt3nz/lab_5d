@@ -320,3 +320,70 @@ long long findSumOfMaxesOfPseudoDiagonal(matrix m) {
 
     return sumElements;
 }
+
+int getMinInArea(matrix const m) {
+    position leftElement = getMaxValuePos(m);
+    position rightElement = leftElement;
+
+    int minElement = m.values[leftElement.rowIndex][leftElement.colIndex];
+    if (leftElement.rowIndex == 0)
+        return minElement;
+
+    int subArr[10];
+    int sizeSubArr = 1;
+    while (leftElement.rowIndex >= 0 && rightElement.rowIndex <= m.nCols) {
+        if (leftElement.colIndex == -1) {
+            leftElement.colIndex++;
+            sizeSubArr--;
+        }
+
+        if (rightElement.colIndex == m.nCols) {
+            rightElement.colIndex--;
+            sizeSubArr--;
+        }
+
+        int i = 0;
+        while (i < sizeSubArr) {
+            subArr[i] = (m).values[leftElement.rowIndex][leftElement.colIndex + i];
+            i++;
+        }
+
+        minElement = getMin(subArr, sizeSubArr);
+
+        rightElement.rowIndex--;
+        rightElement.colIndex++;
+        leftElement.rowIndex--;
+        leftElement.colIndex--;
+        sizeSubArr += 2;
+    }
+
+    return minElement;
+}
+
+int getNSpecialElement(matrix m) {
+    long long criteriaArray[m.nCols];
+    int *subArray = (int *) calloc(m.nRows, sizeof(int));
+    int *maxArray = (int *) calloc(m.nRows, sizeof(int));
+    for (int jCols = 0; jCols < m.nCols; ++jCols) {
+        for (int iRows = 0; iRows < m.nRows; ++iRows) {
+            subArray[iRows] = m.values[iRows][jCols];
+            maxArray[jCols] = max2(maxArray[jCols], m.values[iRows][jCols]);
+        }
+
+        criteriaArray[jCols] = getSum(subArray, m.nRows);
+    }
+    outputArray(criteriaArray,m.nCols);
+    outputArray(maxArray,m.nRows);
+    /*int counterSpecialElement = 0;
+    for (int jCols = 0; jCols < m.nCols; ++jCols) {
+        for (int iRows = 0; iRows < m.nRows; ++iRows) {
+            if (criteriaArray[jCols] - m.values[iRows][jCols] < criteriaArray[jCols]) {
+                counterSpecialElement++;
+                printf("%d ", counterSpecialElement);
+            }
+        }
+    }
+
+    return counterSpecialElement;*/
+}
+
