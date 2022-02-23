@@ -114,22 +114,25 @@ void swapColumns(matrix m, int j1, int j2) {
     }
 }
 
-void insertionSortRowsMatrixByRowCriteria(matrix m, int (*criteria)(int *, int)) {
+void selectionSortRowsMatrixByRowCriteria(matrix m, int(*criteria)(matrix, int *a)) {
     int *criteriaArray = (int *) malloc(sizeof(int) * m.nRows);
-    for (size_t i = 0; i < m.nRows; ++i)
+    for (size_t i = 0; i < m.nRows; ++i) {
         criteriaArray[i] = criteria(m.values[i], m.nCols);
+    }
 
-    for (size_t i = 0; i < m.nRows - 1; ++i)
-        for (size_t j = i + 1; j < m.nRows; ++j)
+    for (size_t i = 0; i < m.nRows - 1; ++i) {
+        for (size_t j = i + 1; j < m.nRows; ++j) {
             if (criteriaArray[i] > criteriaArray[j]) {
                 swapRows(m, i, j);
                 swapVoid(&criteriaArray[i], &criteriaArray[j], sizeof(int));
             }
+        }
+    }
 
     free(criteriaArray);
 }
 
-void insertionSortColsMatrixByColCriteria(matrix m, int (*criteria)(int *, int)) {
+void selectionSortRowsMatrixByColCriteria(matrix m, int(*criteria)(int *, int)) {
     int *criteriaArray = (int *) malloc(sizeof(int) * m.nCols);
     int *colsElements = (int *) malloc(sizeof(int) * m.nRows);
     for (size_t j = 0; j < m.nCols; ++j) {
@@ -262,11 +265,11 @@ matrix createMatrixFromArray(const int *a, const int nRows, const int nCols) {
 }
 
 void sortRowsByMaxElements(matrix m) {
-    insertionSortRowsMatrixByRowCriteria(m, getMax);
+    selectionSortRowsMatrixByRowCriteria(m, getMax);
 }
 
-void sortColsByMinElement() {
-
+void sortColsByMinElement(matrix m) {
+    selectionSortRowsMatrixByColCriteria(m, getMin);
 }
 
 matrix mulMatrices(matrix const m1, matrix const m2) {
@@ -365,26 +368,28 @@ int getMinInArea(matrix const m) {
     return minElement;
 }
 
-int getNSpecialElement(matrix m) {
-    int bufferArray[m.nCols];
-    long long *arraySumCols = (long long *) calloc(m.nCols, sizeof(long long));
-    int *maxArray = (int *) calloc(m.nRows, sizeof(int));
-    for (int jCols = 0; jCols < m.nCols; ++jCols) {
-        for (int iRows = 0; iRows < m.nRows; ++iRows) {
-            bufferArray[iRows] = m.values[iRows][jCols];
-            maxArray[jCols] = max2(maxArray[jCols], m.values[iRows][jCols]);
-        }
+int getNSpecialElement(matrix const m) {
+    long long criteriaArray[m.nCols];
+    int subArray[m.nRows];
+    for (size_t j = 0; j < m.nCols; ++j) {
+        for (size_t i = 0; i < m.nRows; ++i)
+            subArray[i] = m.values[i][j];
 
-        arraySumCols[jCols] = getSum(bufferArray, m.nCols);
+        criteriaArray[j] = getSum(subArray, m.nRows);
     }
-    outputLLDArray(arraySumCols, m.nCols);
-    outputArray(maxArray, m.nRows);
 
+    int counter = 0;
+    for (size_t j = 0; j < m.nCols; ++j)
+        for (size_t i = 0; i < m.nRows; ++i)
+            if (criteriaArray[j] - m.values[i][j] < criteriaArray[j])
+                counter++;
+
+    return counter;
 }
 
 void swapPenultimateRow(matrix m) {
-    if (m.nRows < 2){
-        fprintf(stderr, "Error: rows < 2" );
+    if (m.nRows < 2) {
+        fprintf(stderr, "Error: rows < 2");
         exit(1);
     }
 

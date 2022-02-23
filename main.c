@@ -42,7 +42,7 @@ void test_exercise2() {
             3, 3
     );
 
-//    sortRowsByMaxElement(m1);
+    sortRowsByMaxElement(m1);
 
     matrix m2 = createMatrixFromArray(
             (int[]) {
@@ -61,33 +61,6 @@ void test_exercise2() {
 void test_exercise3() {
     matrix m1 = createMatrixFromArray(
             (int[]) {
-                    1, 2, 3,
-                    2, 1, 2,
-                    3, 2, 1
-            },
-            3, 3
-    );
-
-    getSquareOfMatrixIfSymmetric(&m1);
-
-    matrix m2 = createMatrixFromArray(
-            (int[]) {
-                    14, 10, 10,
-                    10, 9, 10,
-                    10, 10, 14
-            },
-            3, 3
-    );
-
-    assert(twoMatricesEqual(m1, m2) == 1);
-
-    freeMemoryMatrix(m1);
-    freeMemoryMatrix(m2);
-}
-
-void test_exercise4_one() {
-    matrix m1 = createMatrixFromArray(
-            (int[]) {
                     3, 5, 2, 4, 3, 3,
                     2, 5, 1, 8, 2, 7,
                     6, 1, 4, 4, 8, 3
@@ -104,6 +77,33 @@ void test_exercise4_one() {
                     1, 4, 6, 8, 3, 4
             },
             3, 6
+    );
+
+    assert(twoMatricesEqual(m1, m2) == 1);
+
+    freeMemoryMatrix(m1);
+    freeMemoryMatrix(m2);
+}
+
+void test_exercise4_one() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    1, 2, 3,
+                    2, 1, 2,
+                    3, 2, 1
+            },
+            3, 3
+    );
+
+    getSquareOfMatrixIfSymmetric(&m1);
+
+    matrix m2 = createMatrixFromArray(
+            (int[]) {
+                    14, 10, 10,
+                    10, 9, 10,
+                    10, 10, 14
+            },
+            3, 3
     );
 
     assert(twoMatricesEqual(m1, m2) == 1);
@@ -285,8 +285,8 @@ void test_exercise8_MaxInTheFirstRow() {
     freeMemoryMatrix(m1);
 }
 
-/*void test_exercise11() {
-    matrix m = createMatrixFromArray(
+void test_exercise11() {
+    matrix m1 = createMatrixFromArray(
             (int[]) {
                     3, 5, 5, 4,
                     2, 3, 6, 7,
@@ -295,8 +295,10 @@ void test_exercise8_MaxInTheFirstRow() {
             3, 4
     );
 
-    getNSpecialElement(m);
-}*/
+    assert(getNSpecialElement(m1) == 2);
+
+    freeMemoryMatrix(m1);
+}
 
 void test_exercise12_severalIdenticalMinimum() {
     matrix m1 = createMatrixFromArray(

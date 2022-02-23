@@ -14,7 +14,8 @@ typedef struct position {
     int rowIndex;
     int colIndex;
 } position;
-
+//Выдает сообщение при обращении к неверному индексу
+//И завершает программу с кодом exit(1)
 void badIndex();
 
 //Выделяет память под структуру matrix размером nRows на nCols
@@ -83,22 +84,29 @@ position getMaxValuePos(matrix const m);
 //возвращает матрицу, размера nRows на nCols, построенного из элементов массива a, размещенную в динамической памяти.
 matrix createMatrixFromArray(const int *a, const int nRows, const int nCols);
 
+//сортирует ряды матрицы m по неубыванию наибольших элементов строк
 void sortRowsByMaxElement(matrix m);
 
+//возвращает матрицу, полученную перемножением матриц m1 и m2
 matrix mulMatrices(matrix m1, matrix m2);
 
+//возводит в квадрат матрицу m, если она симметрична
 void getSquareOfMatrixIfSymmetric(matrix *m);
 
+//транспонирует матрицу m, если среди сумм элементов строк матрицы нет равных
 void transposeIfMatrixHasNotEqualSumOfRows(matrix m);
 
 int getMaxDiagonalElement(matrix m, int iRows, int jCols);
 
+//возвращает сумму максимальных элементов всех псевдодиагоналей данной матрицы m
 long long findSumOfMaxesOfPseudoDiagonal(matrix m);
 
+//возвращает минимальное значение элемент матрицы m в области, образованной пирамидой выше максимального элемента
 int getMinInArial(matrix m);
 
 int getNSpecialElement(matrix m);
 
+//заменяет предпоследнюю строку матрицы м первым из столбцов, в котором находится минимальный элемент матрицы
 void swapPenultimateRow(matrix m);
 
 
