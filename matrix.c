@@ -270,23 +270,27 @@ void sortColsByMinElement() {
 }
 
 matrix mulMatrices(matrix const m1, matrix const m2) {
-    if (m1.nCols != m2.nRows)
+    if (m1.nCols != m2.nRows) {
         impossibleMultiplication();
+    }
 
     matrix m3 = getMemoryMatrix(m1.nRows, m2.nCols);
-    for (size_t i = 0; i < m1.nRows; ++i)
+    for (size_t i = 0; i < m1.nRows; ++i) {
         for (size_t j = 0; j < m2.nCols; ++j) {
             m3.values[i][j] = 0;
-            for (size_t k = 0; k < m1.nCols; ++k)
+            for (size_t k = 0; k < m1.nCols; ++k) {
                 m3.values[i][j] += m1.values[i][k] * m2.values[k][j];
+            }
         }
+    }
 
     return m3;
 }
 
 void getSquareOfMatrixIfSymmetric(matrix *m) {
-    if (isSymmetricMatrix(*m))
+    if (isSymmetricMatrix(*m)) {
         *m = mulMatrices(*m, *m);
+    }
 }
 
 void transposeIfMatrixHasNotEqualSumOfRows(matrix m) {
@@ -326,8 +330,9 @@ int getMinInArea(matrix const m) {
     position rightElement = leftElement;
 
     int minElement = m.values[leftElement.rowIndex][leftElement.colIndex];
-    if (leftElement.rowIndex == 0)
+    if (leftElement.rowIndex == 0) {
         return minElement;
+    }
 
     int subArr[10];
     int sizeSubArr = 1;
@@ -361,29 +366,36 @@ int getMinInArea(matrix const m) {
 }
 
 int getNSpecialElement(matrix m) {
-    long long criteriaArray[m.nCols];
-    int *subArray = (int *) calloc(m.nRows, sizeof(int));
+    int bufferArray[m.nCols];
+    long long *arraySumCols = (long long *) calloc(m.nCols, sizeof(long long));
     int *maxArray = (int *) calloc(m.nRows, sizeof(int));
     for (int jCols = 0; jCols < m.nCols; ++jCols) {
         for (int iRows = 0; iRows < m.nRows; ++iRows) {
-            subArray[iRows] = m.values[iRows][jCols];
+            bufferArray[iRows] = m.values[iRows][jCols];
             maxArray[jCols] = max2(maxArray[jCols], m.values[iRows][jCols]);
         }
 
-        criteriaArray[jCols] = getSum(subArray, m.nRows);
+        arraySumCols[jCols] = getSum(bufferArray, m.nCols);
     }
-    outputArray(criteriaArray,m.nCols);
-    outputArray(maxArray,m.nRows);
-    /*int counterSpecialElement = 0;
-    for (int jCols = 0; jCols < m.nCols; ++jCols) {
-        for (int iRows = 0; iRows < m.nRows; ++iRows) {
-            if (criteriaArray[jCols] - m.values[iRows][jCols] < criteriaArray[jCols]) {
-                counterSpecialElement++;
-                printf("%d ", counterSpecialElement);
-            }
-        }
-    }
+    outputLLDArray(arraySumCols, m.nCols);
+    outputArray(maxArray, m.nRows);
 
-    return counterSpecialElement;*/
 }
 
+void swapPenultimateRow(matrix m) {
+    if (m.nRows < 2){
+        fprintf(stderr, "Error: rows < 2" );
+        exit(1);
+    }
+
+    position min = getMinValuePos(m);
+
+    int subArray[m.nRows];
+    for (size_t i = 0; i < m.nRows; ++i) {
+        subArray[i] = m.values[i][min.colIndex];
+    }
+
+    for (size_t j = 0; j < m.nCols; ++j) {
+        m.values[m.nRows - 2][j] = subArray[j];
+    }
+}

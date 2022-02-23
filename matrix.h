@@ -99,6 +99,8 @@ int getMinInArial(matrix m);
 
 int getNSpecialElement(matrix m);
 
+void swapPenultimateRow(matrix m);
+
 
 
 #include "matrix.c"

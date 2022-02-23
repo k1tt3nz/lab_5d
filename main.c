@@ -298,6 +298,87 @@ void test_exercise8_MaxInTheFirstRow() {
     getNSpecialElement(m);
 }*/
 
+void test_exercise12_severalIdenticalMinimum() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    1, 2, 3,
+                    4, 5, 6,
+                    7, 8, 1
+            },
+            3, 3
+    );
+
+    swapPenultimateRow(m1);
+
+    matrix m2 = createMatrixFromArray(
+            (int[]) {
+                    1, 2, 3,
+                    1, 4, 7,
+                    7, 8, 1
+            },
+            3, 3
+    );
+
+    assert(twoMatricesEqual(m1, m2) == 1);
+
+    freeMemoryMatrix(m1);
+    freeMemoryMatrix(m2);
+}
+
+void test_exercise12_minInTheLastColumn() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    3, 2, 6, 4,
+                    4, 5, 6, 5,
+                    7, 8, 2, 0,
+                    9, 3, 1, 1
+            },
+            4, 4
+    );
+
+    swapPenultimateRow(m1);
+
+    matrix m2 = createMatrixFromArray(
+            (int[]) {
+                    3, 2, 6, 4,
+                    4, 5, 6, 5,
+                    4, 5, 0, 1,
+                    9, 3, 1, 1
+            },
+            4, 4
+    );
+
+    assert(twoMatricesEqual(m1, m2) == 1);
+
+    freeMemoryMatrix(m1);
+    freeMemoryMatrix(m2);
+}
+
+void test_exercise12_size2x2() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    3, 2,
+                    1, 1
+            },
+            2, 2
+    );
+
+    swapPenultimateRow(m1);
+
+    matrix m2 = createMatrixFromArray(
+            (int[]) {
+                    3, 1,
+                    1, 1
+            },
+            2, 2
+    );
+
+    assert(twoMatricesEqual(m1, m2) == 1);
+
+    freeMemoryMatrix(m1);
+    freeMemoryMatrix(m2);
+}
+
 void test() {
     test_exercise1();
     test_exercise2();
@@ -312,6 +393,9 @@ void test() {
     test_exercise8_MaxInTheFirstRow();
     test_exercise8_MaxInTheMiddle();
     test_exercise8_MaxOnTheLeftEdge();
+    test_exercise12_minInTheLastColumn();
+    test_exercise12_severalIdenticalMinimum();
+    test_exercise12_size2x2();
 }
 
 
