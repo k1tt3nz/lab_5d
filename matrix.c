@@ -404,3 +404,31 @@ void swapPenultimateRow(matrix m) {
         m.values[m.nRows - 2][j] = subArray[j];
     }
 }
+
+int getMinModuloValueInMatrix(matrix m) {
+    int minValue = abs(m.values[0][0]);
+
+    for (int i = 0; i < m.nRows; i++)
+        for (int j = 0; j < m.nCols; j++)
+            if (abs(m.values[i][j]) < minValue)
+                minValue = abs(m.values[i][j]);
+
+    return minValue;
+}
+
+void printMatrixWithMinModule(matrix *ms, int nMatrix) {
+    int *arrayIndexMinModule = (int *) malloc(sizeof(int) * nMatrix);
+
+    for (int i = 0; i < nMatrix; i++)
+        arrayIndexMinModule[i] = getMinModuloValueInMatrix(ms[i]);
+
+    int minInArray = getMin(arrayIndexMinModule, nMatrix);
+
+    for (int i = 0; i < nMatrix; i++)
+        if (arrayIndexMinModule[i] == minInArray) {
+            outputMatrix(ms[i]);
+            printf("\n");
+        }
+
+    free(arrayIndexMinModule);
+}

@@ -109,6 +109,12 @@ int getNSpecialElement(matrix m);
 //заменяет предпоследнюю строку матрицы м первым из столбцов, в котором находится минимальный элемент матрицы
 void swapPenultimateRow(matrix m);
 
+// Возвращает минимальное по модулю значение матрицы m
+int getMinModuloValueInMatrix(matrix m);
+
+// Выводит матрицы ms с наименьшей нормой, изначальное количество матриц nMatrix.
+// В качестве нормы матрицы взять максимум абсолютных величин её элементов
+void printMatrixWithMinModule(matrix *ms, int nMatrix)
 
 
 #include "matrix.c"

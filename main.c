@@ -381,6 +381,37 @@ void test_exercise12_size2x2() {
     freeMemoryMatrix(m2);
 }
 
+void test_exercise15_function_getMinModuloValueInMatrix() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    10, -3, 3,
+                    30, -60, 10,
+                    80, -80, 5
+            },
+            3, 3
+    );
+
+    assert(getMinModuloValueInMatrix(m1) == 3);
+
+    freeMemoryMatrix(m1);
+}
+
+void test_exercise15_function_getMinModuloValueInMatrix_two() {
+    matrix m1 = createMatrixFromArray(
+            (int[]) {
+                    0, -80, -20,
+                    0, -60, 0,
+                    -80, 0, -20,
+                    -90, 2, 30
+            },
+            4, 3
+    );
+
+    assert(getMinModuloValueInMatrix(m1) == 0);
+
+    freeMemoryMatrix(m1);
+}
+
 void test() {
     test_exercise1();
     test_exercise2();
@@ -398,6 +429,8 @@ void test() {
     test_exercise12_minInTheLastColumn();
     test_exercise12_severalIdenticalMinimum();
     test_exercise12_size2x2();
+    test_exercise15_function_getMinModuloValueInMatrix();
+    test_exercise15_function_getMinModuloValueInMatrix_two();
 }
 
 
